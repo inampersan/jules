@@ -14,8 +14,22 @@ body {
 
 .ant-list-item {
   border-bottom: 1px solid #f0f0f0;
+  /* Remove direct height manipulation if react-virtualized handles it via wrapper */
 }
 
 .ant-list-item-meta-title {
   font-weight: bold;
+}
+
+/* Style for the wrapper div */
+.list-item-wrapper {
+  /* Ensure the wrapper div itself doesn't add extra spacing or borders that could interfere */
+  padding: 0;
+  margin: 0;
+  border: none; /* Override any potential default borders */
+}
+
+/* Ensure AntList.Item within the wrapper takes up the necessary space */
+.list-item-wrapper .ant-list-item {
+    box-sizing: border-box; /* Recommended for layout consistency */
 }

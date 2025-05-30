@@ -12,7 +12,8 @@ const list = Array.from({ length: rowCount }, (_, index) => ({
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
-  defaultHeight: 50  // Default height for items, can be adjusted
+  defaultHeight: 50, // Default height for items, can be adjusted
+  minHeight: 50 // Ensure a minimum height
 });
 
 function renderRow({ index, key, style, parent }) {
@@ -25,13 +26,18 @@ function renderRow({ index, key, style, parent }) {
       columnIndex={0}
       rowIndex={index}
     >
-      <AntList.Item style={style}>
-        <AntList.Item.Meta
-          avatar={<Avatar src={item.avatar} />}
-          title={item.name}
-          description={`Description for item ${index}`}
-        />
-      </AntList.Item>
+      {({ measure, registerChild }) => (
+        // Apply the style to a wrapper div
+        <div ref={registerChild} style={style} className="list-item-wrapper">
+          <AntList.Item>
+            <AntList.Item.Meta
+              avatar={<Avatar src={item.avatar} />}
+              title={item.name}
+              description={`Description for item ${index}`}
+            />
+          </AntList.Item>
+        </div>
+      )}
     </CellMeasurer>
   );
 }
